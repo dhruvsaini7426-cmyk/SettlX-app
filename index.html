@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#081412">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>SettlX (STLX) — Dubai Digital Asset Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP APP DOWNLOAD BAR -->
+<div class="app-bar compact" id="appBar">
+  <div class="brand">
+    <div class="brand-logo">SX</div>
+    <div class="brand-info">
+      <b>SettlX App <span class="dubai-badge">DUBAI</span></b>
+      <small>Install Web App for fast trading</small>
+    </div>
+  </div>
+  <button class="dl-btn" id="installBtn">⬇ Download App</button>
+</div>
+
+<!-- LOGIN & 10-SECOND FLASH OTP SECTION -->
+<main>
+  <section id="s1">
+    <h1>SettlX Log in</h1>
+    <p class="sub">Dubai Base Digital Asset & Staking Portal</p>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tabM" aria-selected="true">Mobile</button>
+      <button role="tab" id="tabE" aria-selected="false">Email</button>
+    </div>
+    <label for="id" id="idLabel">Mobile number</label>
+    <div class="field"><span id="pre">+91</span><input id="id" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="98765 43210"></div>
+    <p class="err" id="e1" role="alert"></p>
+    <button class="btn" id="send">Send code</button>
+  </section>
+
+  <section id="s2" class="hide">
+    <h1>Enter the code</h1>
+    <p class="sub" id="sentTo"></p>
+
+    <!-- 10-SECOND IN-APP NOTIFICATION POPUP -->
+    <div class="flash-otp" id="flashBox">
+      <div class="flash-top">
+        <span>🔔 SettlX Security Code</span>
+        <b id="flashSec">10s</b>
+      </div>
+      <div class="flash-code" id="demoCode">------</div>
+      <small>Code will disappear in 10 seconds. Memorize or enter it below.</small>
+    </div>
+
+    <div class="otp" id="otp" aria-label="6-digit code"></div>
+    <p class="err" id="e2" role="alert"></p>
+    <button class="btn" id="verify" disabled>Verify and continue</button>
+    <div class="row">
+      <span id="timer"></span>
+      <span><button class="link" id="resend" disabled>Resend code</button> · <button class="link" id="change">Change</button></span>
+    </div>
+  </section>
+</main>
+
+<!-- CLEAN MAIN DASHBOARD -->
+<div id="dash" class="hide">
+  <header class="dh">
+    <div class="av" id="av" aria-hidden="true"></div>
+    <div><h1 id="hi"></h1><p class="sub" id="dsub"></p></div>
+    <button class="btn out" id="logout">Log out</button>
+  </header>
+
+  <!-- TAB 1: HOME -->
+  <div id="tab-home" class="nav-pane">
+    <div class="grid">
+      <section class="card wide">
+        <h2>Refer &amp; Earn <span class="dubai-badge">TEAM BONUS</span></h2>
+        <p class="hint" style="margin:0 0 12px">Invite friends to SettlX and earn level rewards as your team grows[cite: 7].</p>
+        <div class="wal">
+          <div class="stat"><small>DIRECT</small><strong id="refDirect">8</strong></div>
+          <div class="stat"><small>TEAM</small><strong id="refTeam">18</strong></div>
+          <div class="stat big"><small>EARNED</small><strong id="refEarned">$128.00</strong></div>
+        </div>
+        <div class="addr" style="margin-top:12px">
+          <code id="refLink">https://settlx.app/register?ref=DXB1001</code>
+          <button class="link" id="copyRef">Copy</button>
+        </div>
+        <div class="two">
+          <button class="btn" id="shareWa">WhatsApp</button>
+          <button class="btn alt" id="shareTg">Telegram</button>
+        </div>
+        <p class="msg" id="refMsg" role="status"></p>
+      </section>
+
+      <section class="card wide">
+        <div class="sec-head">
+          <h2>Recent</h2>
+          <button class="link" id="goWalletAll">ALL</button>
+        </div>
+        <ul class="acts" id="homeRecent"></ul>
+      </section>
+
+      <section class="card wide">
+        <h2>More</h2>
+        <div class="menu-list">
+          <button class="menu-row" data-jump="earn"><span>▶ Watch &amp; Earn</span><b>›</b></button>
+          <button class="menu-row" data-jump="earn"><span>🖼 Story Income</span><b>›</b></button>
+          <button class="menu-row" data-jump="me"><span>🏆 Rewards</span><b>›</b></button>
+          <button class="menu-row" id="openTg"><span>✈ Telegram</span><b>›</b></button>
+          <button class="menu-row" id="openHelp"><span>? Help</span><b>›</b></button>
+        </div>
+        <p class="msg" id="moreMsg" role="status"></p>
+      </section>
+    </div>
+  </div>
+
+  <!-- TAB 2: EARN -->
+  <div id="tab-earn" class="nav-pane hide">
+    <div class="grid">
+      <section class="card wide">
+        <h2>Daily Bonus &amp; Tasks <span class="tag">STLX / USDT</span></h2>
+        <p class="hint" style="margin:0 0 12px">Claim daily bonus, complete Watch &amp; Earn tasks, or post Story Income updates[cite: 5, 6].</p>
+        <div class="two">
+          <button class="btn" id="claimBonus">Claim Daily Bonus (+$7.00)</button>
+          <button class="btn alt" id="watchTask">Watch &amp; Earn (+$3.00)</button>
+        </div>
+        <div class="two" style="margin-top:6px">
+          <button class="btn" id="storyTask">Story Income (+$5.00)</button>
+        </div>
+        <p class="msg" id="earnMsg" role="status"></p>
+      </section>
+    </div>
+  </div>
+
+  <!-- TAB 3: TEAM -->
+  <div id="tab-team" class="nav-pane hide">
+    <div class="grid">
+      <section class="card wide">
+        <h2>Your Team</h2>
+        <div class="wal">
+          <div class="stat"><small>TOTAL</small><strong id="tmTotal">18</strong></div>
+          <div class="stat big"><small>ACTIVE</small><strong id="tmActive">18</strong></div>
+          <div class="stat"><small>TODAY</small><strong id="tmToday">2</strong></div>
+        </div>
+        <div class="chips" style="margin-top:14px" id="lvlChips">
+          <button data-lvl="ALL" aria-pressed="true">ALL</button>
+          <button data-lvl="L1" aria-pressed="false">L1</button>
+          <button data-lvl="L2" aria-pressed="false">L2</button>
+          <button data-lvl="L3" aria-pressed="false">L3</button>
+        </div>
+        <ul class="acts" id="teamList"></ul>
+      </section>
+    </div>
+  </div>
+
+  <!-- TAB 4: WALLET -->
+  <div id="tab-wallet" class="nav-pane hide">
+    <div class="grid">
+      <section class="card wide">
+        <h2>Wallet <span class="dubai-badge">DUBAI HUB</span></h2>
+        <p class="hint" style="margin:0 0 12px">Asset: <b>USDT</b> <span class="tag">BEP20</span> · BNB Smart Chain</p>
+        <div class="wal">
+          <div class="stat big"><small>Wallet balance</small><strong id="wbal"></strong></div>
+          <div class="stat"><small>Invested (earns 1% per day)</small><strong id="wprin"></strong></div>
+          <div class="stat"><small>ROI earned</small><strong id="wearn"></strong></div>
+        </div>
+        <p class="nextroi" id="nextroi"></p>
+      </section>
+
+      <section class="card">
+        <h2>Deposit or Cash Out</h2>
+        <p class="hint" style="margin:0 0 4px">Your deposit address <span class="tag">BEP20</span></p>
+        <div class="addr"><code id="daddr"></code><button class="link" id="copy">Copy</button></div>
+        <p class="hint" style="margin:0 0 14px">Demo address only. Never send real crypto here.</p>
+        <label for="amt" id="amtLabel">Amount (USDT)</label>
+        <div class="field"><span id="amtSym">$</span><input id="amt" inputmode="decimal" placeholder="100"></div>
+        <label for="waddr" style="margin-top:12px">Cash Out / Withdraw to (BEP20 address)</label>
+        <div class="field"><input id="waddr" placeholder="0x…" autocomplete="off" spellcheck="false"></div>
+        <div class="two"><button class="btn" id="dep">Deposit</button><button class="btn alt" id="wd">Cash Out</button></div>
+        <p class="err" id="amsg" role="alert"></p>
+        <button class="link" id="sim">Demo: skip 1 day ⏩</button>
+      </section>
+
+      <section class="card">
+        <h2>Account</h2>
+        <dl>
+          <div><dt id="ctLabel">Mobile</dt><dd id="ctVal"></dd></div>
+          <div><dt>Account ID</dt><dd id="aid"></dd></div>
+          <div><dt>Region</dt><dd>Dubai, UAE 🇦🇪</dd></div>
+          <div><dt>Status</dt><dd class="ver">Verified ✓</dd></div>
+          <div><dt>Member since</dt><dd id="since"></dd></div>
+        </dl>
+      </section>
+
+      <section class="card wide">
+        <h2>SettlX Token <span class="tag">STLX</span> <span class="dubai-badge">LIVE MARKET</span></h2>
+        <div class="wal">
+          <div class="stat big"><small>STLX Price</small><strong id="tprice"></strong></div>
+          <div class="stat"><small>Your STLX Balance</small><strong id="tbal"></strong></div>
+          <div class="stat"><small>Portfolio Value</small><strong id="tval"></strong></div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-head">
+            <div><b>STLX / USDT</b> <span style="color:var(--mute)">· 15m Candles</span></div>
+            <div class="ohlc" id="ohlcBar"></div>
+            <span id="tgrowth" class="pill-up">+0.00%</span>
+          </div>
+          <canvas id="tchart"></canvas>
+        </div>
+
+        <p class="nextroi" id="tnote"></p>
+        <label for="tamt" style="margin-top:14px">Number of STLX tokens</label>
+        <div class="field"><input id="tamt" inputmode="decimal" placeholder="500"><span id="tcost" style="padding:0 14px 0 0;font-size:14px"></span></div>
+        <div class="two"><button class="btn" id="tbuy">Buy STLX</button><button class="btn alt" id="tsell">Sell STLX</button></div>
+        <p class="err" id="tmsg" role="alert"></p>
+      </section>
+
+      <section class="card wide">
+        <h2>History</h2>
+        <div class="chips">
+          <button data-f="all" aria-pressed="true">All</button>
+          <button data-f="deposit" aria-pressed="false">Deposits</button>
+          <button data-f="withdraw" aria-pressed="false">Cash Outs</button>
+          <button data-f="roi" aria-pressed="false">ROI</button>
+          <button data-f="token" aria-pressed="false">STLX Trades</button>
+        </div>
+        <ul class="acts tx" id="txs"></ul>
+      </section>
+    </div>
+  </div>
+
+  <!-- TAB 5: ME -->
+  <div id="tab-me" class="nav-pane hide">
+    <div class="grid">
+      <section class="card wide">
+        <h2>Me &amp; Settings</h2>
+        <label for="payoutInput">Payout Address (BEP20)</label>
+        <div class="field"><input id="payoutInput" placeholder="0x…" autocomplete="off" spellcheck="false"></div>
+        <button class="btn" id="savePayout">Save Payout Address</button>
+        <p class="msg" id="meMsg" role="status"></p>
+
+        <div class="menu-list" style="margin-top:16px">
+          <button class="menu-row" id="meAccount"><span>👤 Account</span><b>›</b></button>
+          <button class="menu-row" id="meRewards"><span>🏆 Rewards</span><b>›</b></button>
+          <button class="menu-row" id="meHistory"><span>🕒 History</span><b>›</b></button>
+          <button class="menu-row" id="meHelp"><span>? Help</span><b>›</b></button>
+          <div class="menu-row static-row">
+            <span>🌐 Language</span>
+            <select id="langSel" class="lang-select" aria-label="Language">
+              <option value="EN">EN</option>
+              <option value="HI">HI</option>
+            </select>
+          </div>
+          <button class="menu-row danger-row" id="meLogout"><span>↪ Logout</span><b>›</b></button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="bnav" id="bnav" aria-label="Primary navigation">
+    <button data-tab="home" aria-selected="true"><span>⌂</span><small>HOME</small></button>
+    <button data-tab="earn" aria-selected="false"><span>▷</span><small>EARN</small></button>
+    <button data-tab="team" aria-selected="false"><span>👥</span><small>TEAM</small></button>
+    <button data-tab="wallet" aria-selected="false"><span>💼</span><small>WALLET</small></button>
+    <button data-tab="me" aria-selected="false"><span>👤</span><small>ME</small></button>
+  </nav>
+</div>
+
+<!-- APP INSTALL GUIDE MODAL -->
+<div class="modal-bg hide" id="installModal">
+  <div class="modal">
+    <h3>Install SettlX Web App</h3>
+    <p>Apne phone ya PC par SettlX ko direct app ki tarah install karne ke liye:</p>
+    <ol>
+      <li>Browser ke top-right me <b>Menu (⋮ ya Share icon)</b> par click karein.</li>
+      <li><b>"Install App"</b> ya <b>"Add to Home Screen"</b> select karein.</li>
+      <li><b>Install</b> par tap karein — SettlX icon aapki home screen par aa jayega!</li>
+    </ol>
+    <button class="btn" id="closeModal">Got it</button>
+  </div>
+</div>
+
+<!-- MODULAR JAVASCRIPT FILES -->
+<script src="app.js"></script>
+<script src="trading.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
